@@ -21,7 +21,7 @@
       "type": "node",
       "request": "launch",
       "args": [
-        "${relativeFile}"
+        "${relativeFile}" // 调试当前文件
       ],
       "runtimeExecutable": "ts-node",
       "sourceMaps": true,
