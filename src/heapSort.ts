@@ -2,7 +2,7 @@
  * @Author: zhangjicheng
  * @Date: 2022-04-19 17:35:13
  * @LastEditors: zhangjicheng
- * @LastEditTime: 2022-04-19 18:58:37
+ * @LastEditTime: 2022-04-27 14:40:14
  * @FilePath: \typeScriptDemo\src\heapSort.ts
  */
 
@@ -23,41 +23,40 @@ function log(arr: number[]) {
 /**
  * 生成单位大顶堆
  * @param arr 需要处理的数组
- * @param i 指定当前大顶堆根节点的idx
- * @param len 指定需要处理的数组范围（长度）
+ * @param begin 指定当前大顶堆根节点的idx
+ * @param end 指定需要处理的数组最后一项的idx
  */
-function heaping(arr: number[], i: number, len: number) {
-  let largestIdx = i;      // 设置最大值index, 默认当前i
-  const leftIdx = 2*i+1, rightIdx = 2*i+2;
-  if (leftIdx < len && arr[leftIdx] > arr[largestIdx]) largestIdx = leftIdx;
-  if (rightIdx < len && arr[rightIdx] > arr[largestIdx]) largestIdx = rightIdx;
-  if (largestIdx !== i) { // 最大值idx发生变化，则表示堆结构变化，更新largestIdx并回调验证堆
+function heaping(arr: number[], begin: number, end: number) {
+  let largestIdx = begin;      // 设置最大值index, 默认当前i
+  const leftIdx = 2 * begin + 1, rightIdx = 2 * begin + 2;
+  if (leftIdx <= end && arr[leftIdx] > arr[largestIdx]) largestIdx = leftIdx;
+  if (rightIdx <= end && arr[rightIdx] > arr[largestIdx]) largestIdx = rightIdx;
+  if (largestIdx !== begin) { // 最大值idx发生变化，则表示堆结构变化，更新largestIdx并回调验证堆
     // 将最大值移到堆顶
-    [arr[largestIdx], arr[i]] = [arr[i], arr[largestIdx]];
+    [arr[largestIdx], arr[begin]] = [arr[begin], arr[largestIdx]];
     // 由于当前堆改变，将影响到对应子堆，
-    heaping(arr, largestIdx, len);
+    heaping(arr, largestIdx, end);
   }
 }
 
 // 建立大顶堆
 function buildMaxHeap(arr: number[]) {
   const len = arr.length;
-  // Math.ceil(len / 2) - 1 为当前完全二叉树的最后一项非叶子节点
-  for (let i = Math.ceil(len/2) - 1; i >= 0; i--) {
-    heaping(arr, i, len);
+  // Math.floor(len / 2) - 1 为当前完全二叉树的最后一项非叶子节点
+  for (let i = Math.floor(len / 2) - 1; i >= 0; i--) {
+    heaping(arr, i, len - 1);
   }
 }
 
-// // 排序
+// 排序
 // function heapSort(arr: number[]) {
-//   buildMaxHeap(arr);     // 首先建立大顶堆
+//   buildMaxHeap(arr);     // 首先建立大顶堆，这样之后每次排序则不需要重新从数组尾部开始构建大顶堆
 //   log(arr);
-//   let len = arr.length;  // 记录当前未排序数组长度
-//   for(let i = arr.length - 1; i >= 0; i--) { // ? 注意，此处循环从 arr.length - 1 开始并非从子节点开始构建，而是用来记录当前未排序的元素下标
-//     // 每次循环将最后一位（根据len变化）与堆顶元素交换位置，最大值始终插入最后（index = len）至数组有序
-//     [arr[0], arr[len - 1]] = [arr[len - 1], arr[0]];
-//     len --; // 每次操作完成，len减1
-//     heaping(arr, 0, len);
+//   for(let i = arr.length - 1; i > 0; i--) { // ? 注意，此处循环从 arr.length - 1 开始并非从子节点开始构建，而是用来记录当前未排序的元素下标
+//     // 每次循环将最后一位（根据len变化）与堆顶元素交换位置，最大值始终插入最后（index = i）至数组有序
+//     [arr[0], arr[i]] = [arr[i], arr[0]];
+//     // 此处直接从根节点开始生成大顶堆即可，因为根的左右子节点所构成的堆均为大顶堆
+//     heaping(arr, 0, i - 1);
 //     log(arr);
 //   }
 //   return arr;
@@ -70,15 +69,13 @@ function buildMaxHeap(arr: number[]) {
  */
 function heapSort(arr: number[]) {
   log(arr);
-  let len = arr.length;  // 记录当前未排序数组长度
   for(let i = arr.length - 1; i >= 0; i--) { // ? 注意，此处循环从 arr.length - 1 开始并非从子节点开始构建，而是用来记录当前未排序的元素下标
-    // 重新构建大顶堆
-    for (let j = Math.ceil(len/2) - 1; j >= 0; j--) {
-      heaping(arr, j, len);
+    // 构建大顶堆
+    for (let j = Math.floor(arr.length/2) - 1; j >= 0; j--) {
+      heaping(arr, j, i);
     }
     // 每次循环将最后一位（根据len变化）与堆顶元素交换位置，最大值始终插入最后（index = len）至数组有序
     [arr[0], arr[i]] = [arr[i], arr[0]];
-    len --; // 每次操作完成，len减1
     log(arr);
   }
   return arr;
