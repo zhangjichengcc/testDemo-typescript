@@ -2,7 +2,7 @@
  * @Author: zhangjicheng
  * @Date: 2022-05-13 16:37:09
  * @LastEditors: zhangjicheng
- * @LastEditTime: 2022-05-13 18:34:40
+ * @LastEditTime: 2022-05-30 11:07:04
  * @FilePath: \typeScriptDemo\src\decorator.ts
  * @description: 装饰器
  */
