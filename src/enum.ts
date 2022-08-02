@@ -2,7 +2,7 @@
  * @Author: zhangjicheng
  * @Date: 2022-05-30 11:08:09
  * @LastEditors: zhangjicheng
- * @LastEditTime: 2022-06-15 19:15:24
+ * @LastEditTime: 2022-06-16 09:54:46
  * @FilePath: \typeScriptDemo\src\enum.ts
  */
 enum Name {

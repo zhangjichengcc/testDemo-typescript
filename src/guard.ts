@@ -2,7 +2,7 @@
  * @Author: zhangjicheng
  * @Date: 2022-06-14 17:26:50
  * @LastEditors: zhangjicheng
- * @LastEditTime: 2022-06-15 15:12:56
+ * @LastEditTime: 2022-07-18 17:34:27
  * @FilePath: \typeScriptDemo\src\guard.ts
  * @Description: 类型守卫
  */
@@ -90,7 +90,7 @@ function consoleInfo(target: Animal | People) {
 
 type Alias = { num: number }
 interface Interface {
-    num: number;
+  num: number;
 }
 declare function aliased(arg: Alias): Alias;
 declare function interfaced(arg: Interface): Interface;
