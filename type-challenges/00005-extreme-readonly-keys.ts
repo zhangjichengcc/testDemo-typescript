@@ -2,7 +2,7 @@
  * @Author: zhangjicheng
  * @Date: 2022-08-04 16:42:27
  * @LastEditors: zhangjicheng
- * @LastEditTime: 2022-08-04 19:04:42
+ * @LastEditTime: 2022-08-05 17:38:04
  * @FilePath: \webpack-demoe:\webspace\typeScriptDemo\type-challenges\00005-extreme-readonly-keys.ts
  */
 // ============= Test Cases =============
@@ -28,41 +28,30 @@ interface Todo2 {
 
 // ============= Your Code Here =============
 
+// 工具方法 MyEqual<X, Y> 判断 X, Y类型是否相同
 type MyEqual<X, Y> = (<T>() => T extends X ? 1 : 2) extends (<T>() => T extends Y ? 1 : 2) ? true : false;
 
-// type A = {a:1, b: 2, readonly c: 2}
+// 工具方法 MyReadonly<T> 将T的所有属性设为只读
+type MyReadonly<T> = {
+  readonly [K in keyof T]: T[K]
+}
 
-type a = MyEqual<{[K in keyof A]: A[K]}, {-readonly [P in keyof A]: A[P]}> extends true ? never : A;
+/** -------------------------------------------------------- */
 
-// type Readonly<T> = MyEqual<{[K in keyof T]: T[K]}, {-readonly [P in keyof T]: T[P]}> extends true ? never : T;
+/**
+ * 将所有readonly 属性构造为新的类型
+ * 通过keyof获取key
+ */
+type GetReadonlyKeys1<T> = keyof {
+  [K in keyof T as 
+    Equal< // 原属性与构建的readonly属性对比，若相对则表示该项为 readonly
+      {[P in K]: T[P]},
+      MyReadonly<{[P in K]: T[P]}> // 将属性设为readonly
+    > extends true ? K : never
+  ]: T[K]
+}
 
-type b = Readonly<A>
-
-// type GetReadonlyKeys<T> = keyof { [P in keyof T as ReadonlyKey<T, P>]: 1 }
-
-// type ReadonlyKey<
-//   T, 
-//   K extends keyof T,
-//   Original = { [P in K]: T[K] },
-//   Readonly = { readonly [P in K]: T[K] }
-// > =
-//   (<V>() => V extends Original ? 1 : 0) extends
-//   (<V>() => V extends Readonly ? 1 : 0) ? K : never
-
-type C = GetReadonlyKeys<Todo1>
-
-type E = keyof Todo1;
-
-type D = C[keyof C]
-
-// todo error
-// type GetReadonlyKeys<T> = keyof {
-//   [K in keyof T as Equal<T[K], Readonly<T[K]>> extends true ? K : never]: T[K]
-// }
-
-// type GetReadonlyKeys<T> = {
-//   [P in keyof T]-?: MyEqual<{ [Q in P]: T[P] }, { -readonly [Q in P]: T[P] }> extends true ? never : P
-// };
+/** --------------------------------------------------------- */
 
 /**
  * 将非 readonly 项的值设为 never
@@ -74,7 +63,7 @@ type D = C[keyof C]
 //   description: never;
 //   completed: never;
 // }
-type GetReadonlyKeys<T> = {
+type GetReadonlyKeys2<T> = {
   [K in keyof T]-? : // -? 
   MyEqual< // 新建类型（去除readonly标记）与原类型每一项对比，相同则表示该项为非readonly，赋值never，否则赋值该项的key，即为readonly项的key
     {[P in K]: T[P]}, 

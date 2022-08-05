@@ -23,6 +23,8 @@ const fn1 = (v: boolean, w: any) => v ? 1 : 2
 
 // ============= Your Code Here =============
 
+/** ReturnType<T> 获取方法T的返回值 */
+
 // `infer` 是工具类型和底层库中非常常用的关键字,表示在 `extends` 条件语句中待推断的类型变量
 
 type MyReturnType<T> = T extends (...args: any[]) => (infer R) ? R : never;

@@ -2,7 +2,7 @@
  * @Author: zhangjicheng
  * @Date: 2022-08-04 00:27:03
  * @LastEditors: zhangjicheng
- * @LastEditTime: 2022-08-04 19:06:08
+ * @LastEditTime: 2022-08-05 11:39:44
  * @FilePath: \webpack-demoe:\webspace\typeScriptDemo\type-challenges\00003-medium-omit.ts
  */
 // ============= Test Cases =============
@@ -34,20 +34,23 @@ interface Expected2 {
 
 // ============= Your Code Here =============
 
+/** Omit<T, K> 去除T中K项 */ 
 
+
+/** ---------------------------------------------------------- */
+
+// 工具方法，取差集
 type MyExclude<T, K extends T> = T extends K ? never : T;
 
-type P = MyExclude<keyof Todo, 'title'>;
 
-type MyOmit<T, K extends keyof T> = {
+type MyOmit1<T, K extends keyof T> = {
   [P in MyExclude<keyof T, K>]: T[P]
 }
 
-type a = keyof Todo
-// type MyOmit<T, K extends keyof T> = {
-//   [P in R as keyof T extends K ? never : R]: T[P];
-// }
+/** ---------------------------------------------------------- */
 
-type OmitTodo = MyOmit<Todo, 'title'>
-
-
+// 通过 as 关键字，将Exclude内置到方法内
+type MyOmit<T, K extends keyof T> = {
+  // 将 P 设置为 keyof T 再通过 as 断言key的范围
+  [P in keyof T as P extends K ? never : P]: T[P];
+}
