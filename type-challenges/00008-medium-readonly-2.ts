@@ -1,10 +1,3 @@
-/*
- * @Author: zhangjicheng
- * @Date: 2022-08-05 16:13:48
- * @LastEditors: zhangjicheng
- * @LastEditTime: 2022-08-05 19:08:30
- * @FilePath: \webpack-demoe:\webspace\typeScriptDemo\type-challenges\00008-medium-readonly-2.ts
- */
 // ============= Test Cases =============
 import type { Alike, Expect } from './test-utils'
 
@@ -53,7 +46,7 @@ type MyReadonly22<T, K extends keyof T = keyof T> = {
 /** ---------------------------------------------------- */
 
 // Exclude
-type MyReadonly23<T, K extends keyof T = keyof T> = {
+type MyReadonly2<T, K extends keyof T = keyof T> = {
   readonly [P in K]: T[P]
 } & {
   [P in Exclude<keyof T, K>]: T[P]
@@ -61,8 +54,8 @@ type MyReadonly23<T, K extends keyof T = keyof T> = {
 
 /** ---------------------------------------------------- */
 
-type MyReadonly2<T, K extends keyof T = keyof T> = {
-  [P in keyof T as P extends K ? readonly P : P]: T[P]
-}
+// type MyReadonly2<T, K extends keyof T = keyof T> = {
+//   [P in keyof T as P extends K ? readonly P] : P]: T[P]
+// }
 
 type A = MyReadonly2<Todo1, 'title'>

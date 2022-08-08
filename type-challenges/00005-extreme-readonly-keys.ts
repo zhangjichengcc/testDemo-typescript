@@ -2,7 +2,7 @@
  * @Author: zhangjicheng
  * @Date: 2022-08-04 16:42:27
  * @LastEditors: zhangjicheng
- * @LastEditTime: 2022-08-05 17:38:04
+ * @LastEditTime: 2022-08-08 10:46:15
  * @FilePath: \webpack-demoe:\webspace\typeScriptDemo\type-challenges\00005-extreme-readonly-keys.ts
  */
 // ============= Test Cases =============
@@ -63,7 +63,7 @@ type GetReadonlyKeys1<T> = keyof {
 //   description: never;
 //   completed: never;
 // }
-type GetReadonlyKeys2<T> = {
+type GetReadonlyKeys<T> = {
   [K in keyof T]-? : // -? 
   MyEqual< // 新建类型（去除readonly标记）与原类型每一项对比，相同则表示该项为非readonly，赋值never，否则赋值该项的key，即为readonly项的key
     {[P in K]: T[P]}, 
