@@ -2,7 +2,7 @@
  * @Author: zhangjicheng
  * @Date: 2022-08-08 17:22:44
  * @LastEditors: zhangjicheng
- * @LastEditTime: 2022-08-08 18:23:08
+ * @LastEditTime: 2022-08-10 18:51:57
  * @FilePath: \webpack-demoe:\webspace\typeScriptDemo\type-challenges\00012-medium-chainable-options.ts
  */
 // ============= Test Cases =============
@@ -42,7 +42,7 @@ type Expected2 = {
 
 // ============= Your Code Here =============
 
-type Chainable<T = {}> = {
+type Chainable1<T = {}> = {
   option: <K extends PropertyKey, V>(
     key: K,
     value: K extends keyof T ? (V extends T[K] ? never : V) : V
@@ -55,3 +55,17 @@ type Chainable<T = {}> = {
   }>;
   get(): T;
 }
+
+/** --------------------------------------- */
+
+type Chainable<T = {}> = {
+  option: <K extends PropertyKey, V>(
+    key: K extends keyof T ?
+    V extends T[K] ? never : K
+    : K, 
+    value: V
+  ) => Chainable<Omit<T, K> & Record<K, V>>
+  get: () => T
+}
+
+// https://github.com/type-challenges/type-challenges/issues/13951  
