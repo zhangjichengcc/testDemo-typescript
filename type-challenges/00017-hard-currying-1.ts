@@ -2,7 +2,7 @@
  * @Author: zhangjicheng
  * @Date: 2022-08-11 18:23:29
  * @LastEditors: zhangjicheng
- * @LastEditTime: 2022-08-11 19:07:13
+ * @LastEditTime: 2022-08-12 10:34:29
  * @FilePath: \webpack-demoe:\webspace\typeScriptDemo\type-challenges\00017-hard-currying-1.ts
  */
 // ============= Test Cases =============
