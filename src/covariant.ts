@@ -72,22 +72,39 @@ export namespace Demo2 {
     wang: () => void;
   }
   
-  interface Cat extends Animal {
-    miao: () => void;
-  }
 
   type IsChild<T, U> = T extends U ? true : false;
 
   // Dog <= Animal
   type DA = IsChild<Dog, Animal>;
-  // Cat <= Animal
-  type CA = IsChild<Cat, Animal>;
 
+  // 协变
   type FnA = (animal: Animal) => void;
   type FnD = (dog: Dog) => void;
-  type FnC = (cat: Cat) => void;
 
   type FnDA = IsChild<FnD, FnA>
+  type FnAD = IsChild<FnA, FnD>
+
+  // 逆变
+  type FnA2 = () => Animal;
+  type FnD2 = () => Dog;
+
+  type FnDA2 = IsChild<FnD2, FnA2>;
+  type FnAD2 = IsChild<FnA2, FnD2>
+
+  //
+  type A = IsChild<(animal: Animal) => Dog, (dog: Dog) => Animal>
+
+  type Fn1 = (dog: Dog) => Animal;
+  type Fn2 = (animal: Animal) => Dog;
+
+  declare const fn1: Fn1;
+  const fn2: Fn2 = fn1;
+
+  //
+  type Arr1 = Animal[];
+  type Arr2 = Dog[];
+  type test = IsChild<Arr2, Arr1>
 }
 
 export {}
