@@ -15,4 +15,16 @@ type cases = [
 
 
 // ============= Your Code Here =============
-type UnionToIntersection<U> = 
+// type UnionToIntersection<U> = 
+
+type Args = number | string;
+
+type Fn<T> = T extends T ? (args: T) => void : never;
+
+type GetArgs<T> = T extends (args: infer U) => void ? U : never;
+
+type ArgsFn = Fn<Args>
+
+type A = GetArgs<ArgsFn>
+
+// https://github.com/type-challenges/type-challenges/issues/10984
