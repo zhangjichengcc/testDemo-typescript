@@ -1,3 +1,10 @@
+/*
+ * @Author: zhangjicheng
+ * @Date: 2022-08-16 16:37:39
+ * @LastEditors: zhangjicheng
+ * @LastEditTime: 2022-08-17 18:56:31
+ * @FilePath: \webpack-demoe:\webspace\typeScriptDemo\type-challenges\00055-hard-union-to-intersection.ts
+ */
 // ============= Test Cases =============
 import type { Equal, Expect } from './test-utils'
 
@@ -8,4 +15,4 @@ type cases = [
 
 
 // ============= Your Code Here =============
-type UnionToIntersection<U> = any
+type UnionToIntersection<U> = 
