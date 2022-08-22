@@ -2,8 +2,8 @@
  * @Author: zhangjicheng
  * @Date: 2022-08-04 00:27:03
  * @LastEditors: zhangjicheng
- * @LastEditTime: 2022-08-05 11:39:44
- * @FilePath: \webpack-demoe:\webspace\typeScriptDemo\type-challenges\00003-medium-omit.ts
+ * @LastEditTime: 2022-08-22 16:01:47
+ * @FilePath: \typeScriptDemo\type-challenges\00003-medium-omit.ts
  */
 // ============= Test Cases =============
 import type { Equal, Expect } from './test-utils'

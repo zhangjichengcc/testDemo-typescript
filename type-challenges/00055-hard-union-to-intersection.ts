@@ -2,7 +2,7 @@
  * @Author: zhangjicheng
  * @Date: 2022-08-16 16:37:39
  * @LastEditors: zhangjicheng
- * @LastEditTime: 2022-08-19 21:41:33
+ * @LastEditTime: 2022-08-22 15:56:18
  * @FilePath: \typeScriptDemo\type-challenges\00055-hard-union-to-intersection.ts
  */
 // ============= Test Cases =============
@@ -15,12 +15,26 @@ type cases = [
 
 
 // ============= Your Code Here =============
-type UnionToIntersection<U> = U extends U ? (args: U) => void : never
+
+// 涉及 逆变，参数处于逆变位置，
+// 而根据ts规范，在逆变位置上，同一个类型的多个候选会被推断成交叉类型
+type UnionToIntersection<U> = 
+  (
+    U extends U 
+    ? (args: U) => void
+    : never
+  ) extends (args: infer T) => void
+  ? T
+  : never;
+
+/** -------------------------------------- */
 
 type Args = number | string;
 
+// 生成联合类型的方法
 type Fn<T> = T extends T ? (args: T) => void : never;
 
+// 将联合类型转为交叉类型
 type GetArgs<T> = T extends (args: infer U) => void ? U : never;
 
 type ArgsFn = Fn<Args>

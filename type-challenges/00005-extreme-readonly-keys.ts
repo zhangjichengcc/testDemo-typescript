@@ -2,8 +2,8 @@
  * @Author: zhangjicheng
  * @Date: 2022-08-04 16:42:27
  * @LastEditors: zhangjicheng
- * @LastEditTime: 2022-08-08 10:46:15
- * @FilePath: \webpack-demoe:\webspace\typeScriptDemo\type-challenges\00005-extreme-readonly-keys.ts
+ * @LastEditTime: 2022-08-22 17:16:19
+ * @FilePath: \typeScriptDemo\type-challenges\00005-extreme-readonly-keys.ts
  */
 // ============= Test Cases =============
 import type { Equal, Expect } from './test-utils'
@@ -23,6 +23,15 @@ interface Todo2 {
   readonly title: string
   readonly description: string
   completed?: boolean
+}
+
+type GetReadonlyKeys<T> = keyof {
+  [K in keyof T as 
+    Equal<
+      {[P in K]: T[P]}, 
+      {-readonly [P in K]: T[P]}
+    > extends true ? never : K
+  ] : T[K]
 }
 
 
@@ -63,7 +72,7 @@ type GetReadonlyKeys1<T> = keyof {
 //   description: never;
 //   completed: never;
 // }
-type GetReadonlyKeys<T> = {
+type GetReadonlyKeys2<T> = {
   [K in keyof T]-? : // -? 
   MyEqual< // 新建类型（去除readonly标记）与原类型每一项对比，相同则表示该项为非readonly，赋值never，否则赋值该项的key，即为readonly项的key
     {[P in K]: T[P]}, 
