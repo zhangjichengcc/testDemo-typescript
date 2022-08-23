@@ -2,7 +2,7 @@
  * @Author: zhangjicheng
  * @Date: 2022-08-16 16:37:39
  * @LastEditors: zhangjicheng
- * @LastEditTime: 2022-08-22 15:56:18
+ * @LastEditTime: 2022-08-23 17:37:00
  * @FilePath: \typeScriptDemo\type-challenges\00055-hard-union-to-intersection.ts
  */
 // ============= Test Cases =============
@@ -12,7 +12,6 @@ type cases = [
   Expect<Equal<UnionToIntersection<'foo' | 42 | true>, 'foo' & 42 & true>>,
   Expect<Equal<UnionToIntersection<(() => 'foo') | ((i: 42) => true)>, (() => 'foo') & ((i: 42) => true)>>,
 ]
-
 
 // ============= Your Code Here =============
 
