@@ -1,4 +1,10 @@
-function createOverload<T>() {
+/**
+ * Creates an overloaded function that allows multiple implementations based on the argument types.
+ *
+ * @template T - The type of the overloaded function.
+ * @returns {T & { addImpl(...args: any[]): any }} - The overloaded function with the ability to add implementations.
+ */
+function createOverload<T extends any>() {
   const fnMap = new Map();
 
   function overload(this: any, ...args: any[]) {
@@ -19,20 +25,14 @@ function createOverload<T>() {
     fnMap.set(key, fn);
   };
   return overload as T & {
-    addImpl(...args: any[]): any;
+    addImpl(...args: any[]): void;
   };
 }
 
 interface Fn {
   (): void;
-}
-interface Fn {
   (str: string): void;
-}
-interface Fn {
   (str1: string, str2: string): void;
-}
-interface Fn {
   (str1: string, str2: string, str3: string): void;
 }
 
@@ -60,5 +60,3 @@ fn();
 fn("a");
 fn("a", "b");
 fn("a", "b", "c");
-
-debugger;
